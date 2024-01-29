@@ -4,7 +4,9 @@ const confidence = require('confidence');
 const config = {
   port: process.env.PORT,
   appEnv: process.env.APP_ENV,
-  shutdownDelay: parseInt(process.env.SHUTDOWN_DELAY),
+  system: {
+    shutdownDelay: parseInt(process.env.SYSTEM_SHUTDOWN_DELAY),
+  },
   storage: {
     location: process.env.STORAGE_LOCATION,
   },

@@ -1,7 +1,7 @@
 const project = require('../../package.json');
 const configs = require('../helpers/configs/global_config');
 const { GracefulShutdown, livenessProbe, readinessProbe } = require('../helpers/components/system/graceful_shutdown');
-const observers = require('../modules/observers');
+const observers = require('./observers');
 const multer = require("multer");
 const upload = multer({ dest: configs.get("/storage").location });
 const express = require('express');
