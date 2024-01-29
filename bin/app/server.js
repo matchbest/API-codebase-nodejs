@@ -36,7 +36,7 @@ class AppServer {
       this.app.get('/healthz', livenessProbe(gs));
       this.app.get('/readyz', readinessProbe(gs));
       this.app.use((req, res) => {
-        res.status(404).json({ status: true, data: null, message: 'invalid request', code: 404 });
+        res.status(404).json({ status: false, data: null, message: 'invalid request', code: 404 });
       });
     } catch (err) {
       this.server.close();
