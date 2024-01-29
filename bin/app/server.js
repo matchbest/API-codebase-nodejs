@@ -31,7 +31,7 @@ class AppServer {
     try {
       await Promise.all([observers.init()]);
 
-      const gs = new GracefulShutdown(configs.get('/shutdownDelay'));
+      const gs = new GracefulShutdown(configs.get('/system/shutdownDelay'));
       gs.enable(this.server);
       this.app.get('/healthz', livenessProbe(gs));
       this.app.get('/readyz', readinessProbe(gs));
