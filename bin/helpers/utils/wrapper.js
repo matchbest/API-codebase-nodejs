@@ -4,14 +4,14 @@ const data = (data, meta = {}) => ({ err: null, data, meta });
 
 const error = (err, data = null) => ({ err, data });
 
-const response = (res, type, result, message = '') => {
+const response = (res, type, result, message = '', code = 200) => {
   let status = true;
   let data = result.data || null;
-  let code = 200;
   if(type === 'fail'){
     status = false;
     data = result.data || null;
     message = result.err.message || message;
+    code = result.err.statusCode || 500;
   }
   const responseData = {
     success: status,
