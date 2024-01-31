@@ -7,6 +7,8 @@ const upload = multer({ dest: configs.get("/storage").location });
 const express = require('express');
 const bodyParser = require('body-parser');
 
+const userHandler = require('../modules/user/handlers/api_handler');
+
 class AppServer {
 
   constructor() {
@@ -15,11 +17,13 @@ class AppServer {
     this.app.use(bodyParser.urlencoded({ extended: false }));
     this.app.use(upload.any());
 
-    this.app.get('/', (req, res) => {
+    this.init();
+
+    this.app.get('/', (_, res) => {
       res.json({ status: true, data: null, message: 'server is running...', code: 200 })
     });
 
-    this.init();
+    this.app.post('/api/users/v1/register', userHandler.registerUser);
   }
 
   async listen(port, cb) {
@@ -35,7 +39,7 @@ class AppServer {
       gs.enable(this.server);
       this.app.get('/healthz', livenessProbe(gs));
       this.app.get('/readyz', readinessProbe(gs));
-      this.app.use((req, res) => {
+      this.app.use((_, res) => {
         res.status(404).json({ status: false, data: null, message: 'invalid request', code: 404 });
       });
     } catch (err) {
