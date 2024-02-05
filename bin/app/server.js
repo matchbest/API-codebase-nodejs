@@ -24,6 +24,7 @@ class AppServer {
     });
 
     this.app.post('/api/users/v1/register', userHandler.registerUser);
+    this.app.post('/api/users/v1/auth', userHandler.authUser);
   }
 
   async listen(port, cb) {

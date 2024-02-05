@@ -10,6 +10,9 @@ const config = {
   storage: {
     location: process.env.STORAGE_LOCATION,
   },
+  mongodb: {
+    url: process.env.MONGODB_URL,
+  },
 };
 
 const store = new confidence.Store(config);
