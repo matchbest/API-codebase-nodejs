@@ -7,6 +7,12 @@ const config = {
   system: {
     shutdownDelay: parseInt(process.env.SYSTEM_SHUTDOWN_DELAY) || 500,
   },
+  auth: {
+    basic: {
+      username: process.env.AUTH_BASIC_USERNAME,
+      password: process.env.AUTH_BASIC_PASSWORD,
+    }
+  },
   storage: {
     location: process.env.STORAGE_LOCATION,
   },

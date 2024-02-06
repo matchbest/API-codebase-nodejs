@@ -7,6 +7,8 @@ const upload = multer({ dest: configs.get("/storage").location });
 const express = require('express');
 const bodyParser = require('body-parser');
 
+const basicAuthHelper = require('../helpers/auth/basic_auth');
+
 const userHandler = require('../modules/user/handlers/api_handler');
 
 class AppServer {
@@ -16,6 +18,7 @@ class AppServer {
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: false }));
     this.app.use(upload.any());
+    this.app.use(basicAuthHelper.init());
 
     this.init();
 
@@ -23,7 +26,7 @@ class AppServer {
       res.json({ status: true, data: null, message: 'server is running...', code: 200 })
     });
 
-    this.app.post('/api/users/v1/register', userHandler.registerUser);
+    this.app.post('/api/users/v1/register', basicAuthHelper.authenticate, userHandler.registerUser);
     this.app.post('/api/users/v1/auth', userHandler.authUser);
   }
 
