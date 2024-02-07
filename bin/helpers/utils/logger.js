@@ -1,3 +1,4 @@
+const project = require('../../../package.json');
 const winston = require('winston');
 
 let transports = [
@@ -9,6 +10,14 @@ let transports = [
     stringify: (obj) => JSON.stringify(obj),
   }),
 ];
+
+if(config.get('/logstash/isEnable')) {
+  const logstashConfig = config.get('/logstash');
+  logstashConfig.node_name = project.name;
+  transports.push(
+    new winston.transports.Logstash(logstashConfig)
+  );
+}
 
 let logger = winston.createLogger({
   transports: transports,

@@ -1,5 +1,6 @@
 const project = require('../../package.json');
 const configs = require('../helpers/configs/global_config');
+const apm = require('../helpers/components/elastic-apm/apm');
 const { GracefulShutdown, livenessProbe, readinessProbe } = require('../helpers/components/system/graceful_shutdown');
 const observers = require('./observers');
 const multer = require("multer");
@@ -37,7 +38,10 @@ class AppServer {
   async init() {
     // Initiation
     try {
-      await Promise.all([observers.init()]);
+      await Promise.all([
+        observers.init(),
+        apm.init()
+      ]);
 
       const gs = new GracefulShutdown(configs.get('/system/shutdownDelay'));
       gs.enable(this.server);
